@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "crossfilter2": "^1.5.4",
+    "dc": "^4.2.3"
+  }
+}

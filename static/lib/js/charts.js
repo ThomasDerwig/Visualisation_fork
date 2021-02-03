@@ -15,7 +15,7 @@ function makeGraphs(error, projectsJson)
     var weightDim = ndx.dimension(function (d) {return d["Weight"]; });
     var teamDim = ndx.dimension(function (d) {return d["Team"]; });
     var gamesDim = ndx.dimension(function (d) {return d["Games"]; });
-    var yearDim = ndx.dimension(function (d) {return d["Year"]; });
+    var yearDim = ndx.dimension(function (d) {return +d["Year"]; });
 
     var all = ndx.groupAll();
     var groupByName = namesDim.group();
@@ -31,11 +31,11 @@ function makeGraphs(error, projectsJson)
     var testChart = dc.barChart("#test-chart");
 
     testChart
-        .width(1000)
-        .height(1000)
+        .width(600)
+        .height(160)
         .dimension(yearDim)
         .group(groupByYear)
-        .x(d3.time.scale().domain([minDate, maxDate]));
+        .x(d3.scale.linear().domain([minDate, maxDate]));
 
     dc.renderAll();
 };

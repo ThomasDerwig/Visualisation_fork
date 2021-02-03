@@ -2,7 +2,7 @@ d3.json("/olympics/projects").then(function(data) {
     var olympicsProjects = data;
     
     olympicsProjects.forEach(function(d){
-        //d["Year"] = +d["Year"];
+        d["Year"] = +d["Year"];
         d["Age"] = +d["Age"] 
     });
 

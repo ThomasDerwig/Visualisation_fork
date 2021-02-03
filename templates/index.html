@@ -27,7 +27,9 @@
               <div class="chart-title">
                 Cell Title
               </div>
-              <div id="time-chart"></div>
+              <div class="chart-stage">
+                <div id="test-chart"></div>
+              </div>
               <div class="chart-notes">
                 Notes about this chart
               </div>
@@ -41,7 +43,7 @@
                 Cell Title
               </div>
               <div class="chart-stage">
-                <div id="age-row-chart"></div>
+                <img data-src="holder.js/100%x265/white/text:100x265">
               </div>
               <div class="chart-notes">
                 Notes about this chart
@@ -122,9 +124,9 @@
   <script src="./static/lib/js/bootstrap.min.js"></script>
   <script src="./static/lib/js/holder.js"></script>
   <script src="./static/lib/js/d3.js"></script>
-  <script src="./static/lib/node_modules/crossfilter2/crossfilter.js"></script>
-  <script src="./static/lib/node_modules/dc/dist/dc.js"></script>
-  <script type="module" src="./static/lib/js/charts.js"></script>
+  <script src="./static/lib/js/crossfilter.js"></script>
+  <script src="./static/lib/js/dc.js"></script>
+  <script src="./static/lib/js/queue.js"></script>
 
   <script>
     Holder.add_theme("white", { background:"#fff", foreground:"#a7a7a7", size:10 });
@@ -132,6 +134,9 @@
 
   <script src="./static/lib/js/keen.min.js"></script>
   <script src="./static/lib/js/meta.js"></script>
+
+  <script src='./static/lib/js/charts.js' type='text/javascript'></script>
+
 
 </body>
 </html>

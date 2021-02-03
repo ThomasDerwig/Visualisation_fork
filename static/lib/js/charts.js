@@ -1,47 +1,41 @@
-d3.json("/olympics/projects").then(function(data) {
-    var olympicsProjects = data;
-    
-    olympicsProjects.forEach(function(d){
-        d["Year"] = +d["Year"];
-        d["Age"] = +d["Age"] 
-    });
+queue()
+    .defer(d3.json, "/olympics/projects")
+    .await(makeGraphs);
 
-    var ndx = crossfilter(olympicsProjects);
+function makeGraphs(error, projectsJson) 
+{
+    var dataset = projectsJson;
+    var ndx = crossfilter(dataset);
 
-    var yearDim = ndx.dimension(function(d) { return d["Year"]; });
-    var ageDim = ndx.dimension(function(d) { return d["Age"]; });
+    // FIELDS = {'Name': True, 'Sex': True, 'Age': True, 'Height': True, 'Weight': True, 'Team': True, 'Games': True, 'Year': True}
+    var namesDim = ndx.dimension(function (d) {return d["Name"]; });
+    var sexDim = ndx.dimension(function (d) {return d["Sex"]; });
+    var ageDim = ndx.dimension(function (d) {return d["Age"]; });
+    var heightDim = ndx.dimension(function (d) {return d["Height"]; });
+    var weightDim = ndx.dimension(function (d) {return d["Weight"]; });
+    var teamDim = ndx.dimension(function (d) {return d["Team"]; });
+    var gamesDim = ndx.dimension(function (d) {return d["Games"]; });
+    var yearDim = ndx.dimension(function (d) {return d["Year"]; });
 
     var all = ndx.groupAll();
-    var groupYear = yearDim.group(); 
-    var groupAge = ageDim.group();
-    
+    var groupByName = namesDim.group();
+    var groupBySex = sexDim.group();
+    var groupByAge = ageDim.group();
+    var groupByTeam = teamDim.group();
+    var groupByGames = gamesDim.group();
+    var groupByYear = yearDim.group();
 
-    var minYear = yearDim.bottom(1)[0]["Year"];
-    var maxYear = yearDim.top(1)[0]["Year"];
+    var minDate = yearDim.bottom(1)[0]["Year"];
+    var maxDate = yearDim.top(1)[0]["Year"];
 
-    var timeChart = dc.barChart("#time-chart");
-    var ageChart = dc.rowChart("#age-row-chart");
+    var testChart = dc.barChart("#test-chart");
 
-    timeChart
-    .width(600)
-    .height(160)
-    .margins({top: 10, right: 50, bottom: 30, left: 50})
-    .dimension(yearDim)
-    .group(groupYear)
-    .transitionDuration(500)
-    .x(d3.scaleLinear().domain([minYear, maxYear]))
-    .elasticY(true)
-    .xAxisLabel("Year")
-    .yAxis().ticks(4);
-
-    ageChart
-        .width(300)
-        .height(250)
-        .dimension(ageDim)
-        .group(groupAge)
-        .xAxis().ticks(4);
-
-    //var worldChart = dc.geoChoroplethChart("#world-chart");
+    testChart
+        .width(1000)
+        .height(1000)
+        .dimension(yearDim)
+        .group(groupByYear)
+        .x(d3.time.scale().domain([minDate, maxDate]));
 
     dc.renderAll();
-});
+};

@@ -11,7 +11,7 @@ MONGODB_HOST = 'localhost'
 MONGODB_PORT = 27017
 DBS_NAME = 'Olympics'
 COLLECTION_NAME = 'Olympics'
-FIELDS = {'Name': True, 'Age': True, 'Year': True, '_id': False}
+FIELDS = {'Name': True, 'Sex': True, 'Age': True, 'Height': True, 'Weight': True, 'Team': True, 'Games': True, 'Year': True}
 
 @app.route("/")
 def index():
@@ -21,8 +21,7 @@ def index():
 def olympics_projects():
     connection = MongoClient(MONGODB_HOST, MONGODB_PORT)
     collection = connection[DBS_NAME][COLLECTION_NAME]
-    projects = collection.find(projection=FIELDS).limit(140)
-
+    projects = collection.find(projection=FIELDS)
     json_projects = []
     for project in projects:
         json_projects.append(project)

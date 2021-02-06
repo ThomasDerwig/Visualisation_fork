@@ -1,14 +1,11 @@
 queue()
-    .defer(d3.csv, "/olympics/projects")
+    .defer(d3.json, "/olympics/projects")
     .defer(d3.json, "static/geojson/countries.geo.json")
     .await(makeGraphs);
 
 function makeGraphs(error, projectsJson, mapJson) 
 {
     var dataset = projectsJson;
-    dataset.forEach(function(d){
-        d["count"] = + d["count"];
-    });
     
     var ndx = crossfilter(dataset);
 

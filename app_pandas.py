@@ -7,12 +7,6 @@ from bson.json_util import dumps
 
 app = Flask(__name__)
 
-MONGODB_HOST = 'localhost'
-MONGODB_PORT = 27017
-DBS_NAME = 'Olympics'
-COLLECTION_NAME = 'CompleteData'
-FIELDS = {'Name': True, 'Sex': True, 'Age': True, 'Height': True, 'Weight': True, 'Team': True, 'Games': True, 'Year': True, 'country': True, 'Sport': True, 'Medal': True}
-
 @app.route("/")
 def index():
     return render_template("index.html")

@@ -49,9 +49,14 @@ div.dc-chart {
 }
 
 .dc-chart .axis path, .axis line {
-    fill: none;
-    stroke: #000;
+    fill: #ccc;
+    stroke: #ccc;
     shape-rendering: crispEdges;
+}
+
+.dc-chart path {
+    stroke: #ccc;
+    stroke-width: 1;
 }
 
 .dc-chart .axis text {
@@ -89,6 +94,7 @@ div.dc-chart {
 .dc-chart path.line {
     fill: none;
     stroke-width: 1.5px;
+    stroke: #ccc;
 }
 
 .dc-chart circle.dot {
@@ -197,7 +203,7 @@ div.dc-chart {
 }
 
 .dc-chart g.row text {
-    fill: white;
+    fill: black;
     font-size: 12px;
     cursor: pointer;
 }

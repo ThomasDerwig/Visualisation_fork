@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="./static/lib/css/bootstrap.min.css">
   <link rel="stylesheet" href="./static/lib/css/keen-dashboards.css">
   <link rel="stylesheet" href="./static/lib/css/dc.css">
+  <link rel="stylesheet" href="./static/lib/css/misc.css">
 </head>
 <body class="application">
 
@@ -13,6 +14,13 @@
       <div class="navbar-header">
         <a class="navbar-brand" href="./">Dashboard</a>
       </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+            <div class="btn-nav"><a class="btn btn-primary btn-small navbar-btn" id="resetAll"> Reset all filters </a>
+            </div>
+        </li>
+    </ul>
+      
     </div>
   </div>
 
@@ -26,7 +34,7 @@
           <div class="col-sm-12">
             <div class="chart-wrapper">
               <div class="chart-title">
-                Cell Title
+                Amount of participations per year
               </div>
               <div class="chart-stage">
                 <div id="time-chart"></div>
@@ -41,7 +49,7 @@
           <div class="col-sm-6">
             <div class="chart-wrapper">
               <div class="chart-title">
-                Cell Title
+                Amount of medals won
               </div>
               <div class="chart-stage">
                 <div id="medal-chart"></div>
@@ -55,7 +63,23 @@
           <div class="col-sm-6">
             <div class="chart-wrapper">
               <div class="chart-title">
-                Cell Title
+                Amount of participations per gender
+              </div>
+              <div class="chart-stage">
+                <div id="sex-chart"></div>
+              </div>
+              <div class="chart-notes">
+                Notes about this chart
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="chart-wrapper">
+              <div class="chart-title">
+                Most participated in sports
               </div>
               <div class="chart-stage">
                 <div id="sport-chart"></div>
@@ -65,14 +89,13 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
       <div class="col-sm-6">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Cell Title
+            Participations per country
           </div>
           <div class="chart-stage">
             <div id="map"></div>
@@ -87,7 +110,22 @@
       <div class="col-sm-3">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Cell Title
+            Participations per season
+          </div>
+          <div class="chart-stage">
+            <div id="season-chart"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-sm-3">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Total participations
           </div>
           <div class="chart-stage">
             <div id="map-number"></div>
@@ -98,13 +136,41 @@
         </div>
       </div>
 
-      <div class="col-sm-3">
+      <div class="col-sm-6">
         <div class="chart-wrapper">
           <div class="chart-title">
-            Cell Title
+            Participations per height
           </div>
           <div class="chart-stage">
-            <img data-src="holder.js/100%x60/white/text:100x60">
+            <div id="height-chart"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Participations per weight
+          </div>
+          <div class="chart-stage">
+            <div id="weight-chart"></div>
+          </div>
+          <div class="chart-notes">
+            Notes about this chart
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            Participations per age
+          </div>
+          <div class="chart-stage">
+            <div id="age-chart"></div>
           </div>
           <div class="chart-notes">
             Notes about this chart

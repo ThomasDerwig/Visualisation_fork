@@ -7,32 +7,31 @@ function makeGraphs(error, projectsJson, mapJson)
 {
     var dataset = projectsJson;
 
+    // button to reset all selection made by user
     d3.select("#resetAll")
         .on('click', function() {
             dc.filterAll();
             dc.redrawAll();
         });
     
+    // crossfilter accross the full data
     var ndx = crossfilter(dataset);
 
-    // FIELDS = {'Name': True, 'Sex': True, 'Age': True, 'Height': True, 'Weight': True, 'Team': True, 'Games': True, 'Year': True, 'country': True}
-    var namesDim = ndx.dimension(function (d) {return d["Name"]; });
+    // Create dimension for every column of interest
     var sexDim = ndx.dimension(function (d) {return d["Sex"]; });
     var ageDim = ndx.dimension(function (d) {return +d["Age"]; });
     var heightDim = ndx.dimension(function (d) {return +d["Height"]; });
     var weightDim = ndx.dimension(function (d) {return +d["Weight"]; });
-    var teamDim = ndx.dimension(function (d) {return d["Team"]; });
     var seasonDim = ndx.dimension(function (d) {return d["Season"]; });
     var yearDim = ndx.dimension(function (d) {return d["Year"]; });
     var countryDim = ndx.dimension(function(d) { return d["country"]; });
     var sportDim = ndx.dimension(function(d) { return d["Sport"]; });
     var medalDim = ndx.dimension(function(d) { return d["Medal"]; });
-
+    
+    // Create groups for all interesting dimensions
     var all = ndx.groupAll();
-    var groupByName = namesDim.group();
     var groupBySex = sexDim.group();
     var groupByAge = ageDim.group();
-    var groupByTeam = teamDim.group();
     var groupBySeason = seasonDim.group();
     var groupByYear = yearDim.group();
     var groupByCountry = countryDim.group();
@@ -40,10 +39,13 @@ function makeGraphs(error, projectsJson, mapJson)
     var groupByMedal = medalDim.group();
     var groupByHeight = heightDim.group();
     var groupByWeight = weightDim.group();
+
+    // Create special filtered groups removing 0 values for height, age, weight so they don't show in their own charts
     var filtered_Height = remove_empty_bins(groupByHeight);
     var filtered_Weight = remove_empty_bins(groupByWeight);
     var filtered_Age = remove_empty_bins(groupByAge);
-
+    
+    // Specify limits for dimensions
     var max_country = groupByCountry.top(1)[0].value;
     var minDate = yearDim.bottom(1)[0]["Year"];
     var maxDate = yearDim.top(1)[0]["Year"];
@@ -52,6 +54,7 @@ function makeGraphs(error, projectsJson, mapJson)
     var maxHeight = heightDim.top(1)[0]["Height"];
     var maxWeight = weightDim.top(1)[0]["Weight"];
 
+    // Create charts
     var timeChart = dc.barChart("#time-chart");
     var ageChart = dc.barChart("#age-chart");
     var heightChart = dc.barChart("#height-chart");
@@ -62,7 +65,8 @@ function makeGraphs(error, projectsJson, mapJson)
     var sexChart = dc.rowChart("#sex-chart");
     var seasonChart = dc.rowChart("#season-chart");
     var sportChart = dc.pieChart("#sport-chart");    
-
+    
+    // Chart for medals, spefically ordered from gold to no medal
     medalChart
         .width(300)
         .height(250)
@@ -76,7 +80,8 @@ function makeGraphs(error, projectsJson, mapJson)
         })
         .elasticX(true)
         .xAxis().ticks(4);
-
+    
+    // char discplaying sex/gender
     sexChart
         .width(300)
         .height(250)
@@ -84,7 +89,8 @@ function makeGraphs(error, projectsJson, mapJson)
         .group(groupBySex)
         .elasticX(true)
         .xAxis().ticks(4);
-
+    
+    // chart for seasons
     seasonChart
         .width(300)
         .height(250)
@@ -92,7 +98,8 @@ function makeGraphs(error, projectsJson, mapJson)
         .group(groupBySeason)
         .elasticX(true)
         .xAxis().ticks(4);
-
+    
+    // Chart showing sports, limited to 10 specific sports
     sportChart
         .width(700)
         .height(480)
@@ -102,11 +109,7 @@ function makeGraphs(error, projectsJson, mapJson)
         .group(groupBySport)
         .minAngleForLabel(0)
 
-    mapText
-        .formatNumber(d3.format("d"))
-        .valueAccessor(function(d){return d;})
-        .group(all);
-
+    // Chart for timeline, axis scales according to data
     timeChart
         .width(600)
         .height(160)
@@ -118,7 +121,8 @@ function makeGraphs(error, projectsJson, mapJson)
         .elasticY(true)
         .xAxisLabel("Year")
         .yAxis().ticks(4);
-
+    
+    // Chart for age, axis scales according to data
     ageChart
         .width(600)
         .height(160)
@@ -131,6 +135,7 @@ function makeGraphs(error, projectsJson, mapJson)
         .xAxisLabel("Age")
         .yAxis().ticks(4);
 
+    //Chart for height, axis scales according to data
     heightChart
         .width(600)
         .height(160)
@@ -143,6 +148,7 @@ function makeGraphs(error, projectsJson, mapJson)
         .xAxisLabel("Height (cm)")
         .yAxis().ticks(4);
 
+    // Chart for weight, axis scales according to data
     weightChart
         .width(600)
         .height(160)
@@ -155,6 +161,7 @@ function makeGraphs(error, projectsJson, mapJson)
         .xAxisLabel("Weight (kg)")
         .yAxis().ticks(4);
     
+    // Create world map, including zoom function
     var width = 1000,
         height = 500;
     
@@ -179,6 +186,7 @@ function makeGraphs(error, projectsJson, mapJson)
         .attr("height", height)
         .call(zoom);
 
+    // world map linking geo json of the world to the country column from our data
     worldChart
         .width(1000)
         .height(500)
@@ -200,6 +208,7 @@ function makeGraphs(error, projectsJson, mapJson)
     dc.renderAll();
 };
 
+// function that filters all null values
 function remove_empty_bins(source_group) {
     return {
         all:function () {
